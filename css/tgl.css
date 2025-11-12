@@ -1,0 +1,83 @@
+/* tgl.css - Library Input Tanggal */
+/* Style dasar untuk library DateInput */
+.date-input-container {
+    margin-bottom: 15px;
+}
+
+.date-input-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+    font-family: inherit;
+}
+
+.date-input-field {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.date-input-field:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    outline: none;
+}
+
+.date-input-field.error {
+    border-color: #e74c3c;
+}
+
+.date-input-field.success {
+    border-color: #27ae60;
+}
+
+.date-input-error {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;
+}
+
+.date-input-success {
+    color: #27ae60;
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;
+}
+
+.date-input-result {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    border-left: 4px solid #3498db;
+}
+
+.date-input-button {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 10px;
+    font-family: inherit;
+}
+
+.date-input-button:hover {
+    background: #2980b9;
+}
+
+.date-input-button:active {
+    transform: translateY(1px);
+}
