@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Library Input Tanggal</title>
+    <link rel="stylesheet" href="tgl.css">
+    <style>
+        /* Style untuk halaman demo (bukan bagian library) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .demo-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .demo-section h2 {
+            color: #3498db;
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .usage-code {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+        .usage-code pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Demo Library Input Tanggal</h1>
+        
+        <!-- Demo 1: Penggunaan Dasar -->
+        <div class="demo-section">
+            <h2>1. Penggunaan Dasar</h2>
+            <div class="date-input-container">
+                <label class="date-input-label" for="tanggal1">Tanggal Lahir:</label>
+                <input type="text" id="tanggal1" placeholder="dd/mm/yyyy" autocomplete="off" maxlength="10">
+                <div class="date-input-error">Format tanggal tidak valid</div>
+                <div class="date-input-success">Format tanggal valid!</div>
+            </div>
+            <button id="submit1" class="date-input-button">Konversi ke Format Database</button>
+            <div class="date-input-result" id="result1" style="display:none">
+                <h3>Hasil Konversi:</h3>
+                <p><strong>Input User:</strong> <span id="user-input1"></span></p>
+                <p><strong>Format Database:</strong> <span id="db-format1"></span></p>
+            </div>
+        </div>
+        
+        <!-- Demo 2: Dengan Callback -->
+        <div class="demo-section">
+            <h2>2. Dengan Callback Events</h2>
+            <div class="date-input-container">
+                <label class="date-input-label" for="tanggal2">Tanggal Event:</label>
+                <input type="text" id="tanggal2" placeholder="dd/mm/yyyy" autocomplete="off" maxlength="10">
+                <div class="date-input-error">Format tanggal tidak valid</div>
+                <div class="date-input-success">Format tanggal valid!</div>
+            </div>
+            <div id="callback-status" style="margin-top: 10px; font-style: italic;"></div>
+        </div>
+        
+        <!-- Demo 3: Validasi Kustom -->
+        <div class="demo-section">
+            <h2>3. Validasi Tahun Kustom (2020-2030)</h2>
+            <div class="date-input-container">
+                <label class="date-input-label" for="tanggal3">Tanggal Proyek:</label>
+                <input type="text" id="tanggal3" placeholder="dd/mm/yyyy" autocomplete="off" maxlength="10">
+                <div class="date-input-error">Tanggal harus antara 2020-2030</div>
+                <div class="date-input-success">Format tanggal valid!</div>
+            </div>
+        </div>
+        
+        <!-- Contoh Kode Penggunaan -->
+        <div class="usage-code">
+            <h3>Contoh Kode Penggunaan:</h3>
+            <pre><code>
+// 1. Penggunaan dasar
+const tanggal1 = new DateInput(document.getElementById('tanggal1'));
+
+// 2. Dengan callback events
+const tanggal2 = new DateInput(document.getElementById('tanggal2'), {
+    onValid: (value) => {
+        console.log('Tanggal valid:', value);
+    },
+    onInvalid: (value) => {
+        console.log('Tanggal tidak valid:', value);
+    },
+    onChange: (value, isValid) => {
+        console.log('Perubahan:', value, isValid);
+    }
+});
+
+// 3. Dengan validasi kustom
+const tanggal3 = new DateInput(document.getElementById('tanggal3'), {
+    minYear: 2020,
+    maxYear: 2030
+});
+
+// Method yang tersedia:
+// - tanggal1.toDatabaseFormat() → "yyyy-mm-dd"
+// - tanggal1.toDateObject()     → Date object
+// - tanggal1.getValue()         → "dd/mm/yyyy"
+// - tanggal1.setValue("31/12/2023")
+// - tanggal1.validate()         → boolean
+// - tanggal1.clear()
+
+// Method statis:
+// - DateInput.isValid("31/12/2023") → boolean
+// - DateInput.toDatabaseFormat("31/12/2023") → "2023-12-31"
+// - DateInput.today() → tanggal hari ini "dd/mm/yyyy"
+            </code></pre>
+        </div>
+    </div>
+
+    <!-- Load library -->
+    <script src="tgl.js"></script>
+    
+    <!-- Demo JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Demo 1: Penggunaan dasar
+            const tanggal1 = new DateInput(document.getElementById('tanggal1'));
+            document.getElementById('submit1').addEventListener('click', function() {
+                try {
+                    const userInput = tanggal1.getValue();
+                    const dbFormat = tanggal1.toDatabaseFormat();
+                    
+                    document.getElementById('user-input1').textContent = userInput;
+                    document.getElementById('db-format1').textContent = dbFormat;
+                    document.getElementById('result1').style.display = 'block';
+                    
+                    console.log('Format database:', dbFormat);
+                } catch (error) {
+                    alert(error.message);
+                }
+            });
+            
+            // Demo 2: Dengan callback
+            const tanggal2 = new DateInput(document.getElementById('tanggal2'), {
+                onValid: (value) => {
+                    document.getElementById('callback-status').textContent = 
+                        `✅ Tanggal valid: ${value}`;
+                    document.getElementById('callback-status').style.color = '#27ae60';
+                },
+                onInvalid: (value) => {
+                    document.getElementById('callback-status').textContent = 
+                        `❌ Tanggal tidak valid: ${value}`;
+                    document.getElementById('callback-status').style.color = '#e74c3c';
+                }
+            });
+            
+            // Demo 3: Validasi kustom
+            const tanggal3 = new DateInput(document.getElementById('tanggal3'), {
+                minYear: 2020,
+                maxYear: 2030
+            });
+        });
+    </script>
+</body>
+</html>
